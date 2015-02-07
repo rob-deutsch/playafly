@@ -3,22 +3,28 @@
 #include <string.h>
 #include "option.h"
 
-int main(void) {
-	volatile int i;
+#define WDTCONFIG (WDTPW+WDTCNTCL+WDTTMSEL) //configure wdt in timer mode and clear the count register
 
-	// stop watchdog timer
-	WDTCTL = WDTPW | WDTHOLD;
-	// set up bit 0 and 6 of P1 as output
-	P1DIR = 0x41;
-	// intialize P1 to 0
-	P1OUT = 0x00;
+int main( void )
+{
+    // Stop watchdog timer to prevent time out reset
+    WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL;
+    IE1=WDTIFG;
+    P1DIR=BIT0+BIT6;
+    P1OUT=BIT0;
+    P1IE=BIT3;
+    
+    BCSCTL2=DIVS_3;       // slow down the smclk by division to make the blinking slow.details in clock
 
-	// loop forever
-	for (;;) {
-		P1OUT |= option_value("GREEN");
-		// delay for a while
-		for (i = 0; i < 0x6000; i++);
-		P1OUT &= ~option_value("GREEN");
-		for (i = 0; i < 0x6000; i++);
-	}
+    // module tutorial
+    
+    _EINT();
+    while(1);
+}
+
+#pragma vector=WDT_VECTOR
+__interrupt void wdttimer(void)
+{
+    P1OUT^=BIT0+BIT6;
+    IFG1&=~WDTIFG;
 }
