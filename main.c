@@ -14,7 +14,7 @@ int main( void )
     P1OUT=BIT0;
     P1IE=BIT3;
     
-    BCSCTL2=DIVS_3;       // slow down the smclk by division to make the blinking slow.details in clock
+    //BCSCTL2=DIVS_3;       // slow down the smclk by division to make the blinking slow.details in clock
     
     BCSCTL1 &= !XTS; // LFXT1 low frequency mode
     BCSCTL3 |= LFXT1S_2; // LFXT1 = VLO
@@ -22,7 +22,13 @@ int main( void )
     // module tutorial
     
     _EINT();
-    while(1);
+    
+    
+    // Need at least one of the following:
+    
+    _BIS_SR(LPM3_bits + GIE); // Enter LPM3 w/interrupt
+
+    //while(1);
 }
 
 #pragma vector=WDT_VECTOR
