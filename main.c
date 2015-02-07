@@ -6,7 +6,7 @@
 int main( void )
 {
     // Stop watchdog timer to prevent time out reset
-    WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL;
+    WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS0;
 
     // Enable the interrupt and set the ports
     IE1=WDTIFG;
