@@ -17,23 +17,28 @@ enum state_enum state;
 int main( void )
 {
     // Stop watchdog timer to prevent time out reset
-    WDTCTL = CLOCK_DAY;
+    WDTCTL = CLOCK_NIGHT;
 
     // TODO: Set the time from Flash
     unix_time = 0;
 
+    // Setup the timer
+    CCR0 = 18-1;             // PWM Period
+    CCTL1 = OUTMOD_7;          // CCR1 reset/set
+    CCR1 = 0;                // CCR1 PWM duty cycle
+    TACTL = TASSEL_2 + MC_1;   // SMCLK, up mode
+
     // Enable the interrupt and set the ports
     IE1=WDTIFG;
-    P1DIR=BIT0;
-    P1OUT=BIT0;
-    P1IE=BIT3;
+    P1DIR=BIT6;
+    P1SEL=BIT6;
     
     BCSCTL1 &= !XTS; // LFXT1 low frequency mode
     BCSCTL3 |= LFXT1S_2; // LFXT1 = VLO
 
-    state = DAY;
+    //state = DAY;
 
-    _BIS_SR(LPM3_bits + GIE); // Enter LPM3 w/interrupt
+    _BIS_SR(LPM0_bits + GIE); // Enter LPM3 w/interrupt
     
 }
 
@@ -41,6 +46,7 @@ int main( void )
 __interrupt void wdttimer(void)
 {
     static int frac_second = 0;
+    static int direction = 1;
 
     enum state_enum state_should_be_in;
     if ((unix_time / 10) % 2 == 0) {
@@ -51,16 +57,23 @@ __interrupt void wdttimer(void)
 
     if (state_should_be_in == NIGHT) {
         WDTCTL = CLOCK_NIGHT;
-        frac_second++;
-        frac_second = frac_second % 16;
-        if (frac_second == 0) {
+        if (frac_second == 17) {
+            direction = -1;
+        } else if (frac_second == 1) {
+            direction = 1;
+        }
+
+        frac_second += direction;
+
+        CCR1 = frac_second;
+
+        if (frac_second == 5) {
             unix_time++;
-            P1OUT^=BIT0;
         }
 
     } else {
         WDTCTL = CLOCK_DAY;
-        P1OUT = 0;
+        CCR1 = 0;
         unix_time++;
     }
     IFG1&=~WDTIFG;
