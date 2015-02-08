@@ -13,6 +13,7 @@ enum state_enum state;
 
 #define CLOCK_DAY WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS0
 #define CLOCK_NIGHT WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1
+#define FRAC_MIN 1
 
 int main( void )
 {
@@ -23,9 +24,9 @@ int main( void )
     unix_time = 0;
 
     // Setup the timer
-    CCR0 = 8-1;             // PWM Period
+    CCR0 = FRAC_MIN+8-1;             // PWM Period
     CCTL1 = OUTMOD_7;          // CCR1 reset/set
-    CCR1 = 0;                // CCR1 PWM duty cycle
+    CCR1 = FRAC_MIN;                // CCR1 PWM duty cycle
     TACTL = TASSEL_2 + MC_1;   // SMCLK, up mode
 
     // Enable the interrupt and set the ports
@@ -45,7 +46,7 @@ int main( void )
 #pragma vector=WDT_VECTOR
 __interrupt void wdttimer(void)
 {
-    static int frac_second = 0;
+    static int frac_second = FRAC_MIN;
     static int direction = 1;
 
     enum state_enum state_should_be_in;
@@ -57,9 +58,9 @@ __interrupt void wdttimer(void)
 
     if (state_should_be_in == NIGHT) {
         WDTCTL = CLOCK_NIGHT;
-        if (frac_second == 8-1) {
+        if (frac_second == FRAC_MIN + 8-1) {
             direction = -1;
-        } else if (frac_second == 0) {
+        } else if (frac_second == FRAC_MIN) {
             direction = 1;
         }
 
@@ -67,7 +68,7 @@ __interrupt void wdttimer(void)
 
         CCR1 = frac_second;
 
-        if (frac_second == 0) {
+        if (frac_second == FRAC_MIN) {
             unix_time++;
         }
 
