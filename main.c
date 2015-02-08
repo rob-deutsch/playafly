@@ -13,6 +13,7 @@ enum state_enum {
 enum state_enum state;
 
 #define CLOCK_DAY WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS0
+#define CLOCK_NIGHT WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1
 
 int main( void )
 {
@@ -49,12 +50,19 @@ __interrupt void wdttimer(void)
         state_should_be_in = DAY;
     }
 
-    unix_time++;
-
     if (state_should_be_in == NIGHT) {
-        P1OUT^=BIT0;
+        WDTCTL = CLOCK_NIGHT;
+        frac_second++;
+        frac_second = frac_second % 16;
+        if (frac_second == 0) {
+            unix_time++;
+            P1OUT^=BIT0;
+        }
+
     } else {
+        WDTCTL = CLOCK_DAY;
         P1OUT = 0;
+        unix_time++;
     }
     IFG1&=~WDTIFG;
 }
