@@ -14,7 +14,7 @@ enum state_enum state;
 #define CLOCK_DAY WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS0
 #define CLOCK_NIGHT WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1
 
-unsigned int phase[16] = {2,5,10,16,12,10,8,6,5,4,3,2,1,1,1,1};
+unsigned int prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,122};
 
 
 int main( void )
@@ -26,9 +26,9 @@ int main( void )
     unix_time = 0;
 
     // Setup the timer
-    CCR0 = 8-1;             // PWM Period
+    CCR0 = 128-1;             // PWM Period
     CCTL1 = OUTMOD_7;          // CCR1 reset/set
-    CCR1 = phase[0];                // CCR1 PWM duty cycle
+    CCR1 = 0;                // CCR1 PWM duty cycle
     TACTL = TASSEL_2 + MC_1;   // SMCLK, up mode
 
     // Enable the interrupt and set the ports
@@ -60,7 +60,7 @@ __interrupt void wdttimer(void)
 
     if (state_should_be_in == NIGHT) {
         WDTCTL = CLOCK_NIGHT;
-        if (frac_second == 8-1) {
+        if (frac_second == 16-1) {
             direction = -1;
         } else if (frac_second == 0) {
             direction = 1;
@@ -68,7 +68,7 @@ __interrupt void wdttimer(void)
 
         frac_second += direction;
 
-        CCR1 = phase[frac_second];
+        CCR1 = prog[frac_second];
 
         if (frac_second == 0) {
             unix_time++;
