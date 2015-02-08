@@ -31,9 +31,15 @@ void main(void)
 __interrupt void wdttimer(void)
 {
     static int frac_second = 0;
+    static int direction = 1;
 
-    frac_second++;
-    frac_second = frac_second % 16;
+    if (frac_second == 15) {
+        direction = -1;
+    } else if (frac_second == 0) {
+        direction = 1;
+    }
+
+    frac_second += direction;
 
     CCR1 = (frac_second * 999) / 16;
 
