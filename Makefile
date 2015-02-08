@@ -27,6 +27,12 @@ debug:
 mspdebug:
 	$(MSPDEBUG) $(MSPPROGRAMMER)
 
+pwm:
+	$(CC) $(CSTANDARD) -oS -o pwm.elf pwm.c
+	$(MSPDEBUG) $(MSPPROGRAMMER) "erase"
+	$(MSPDEBUG) $(MSPPROGRAMMER) "prog pwm.elf"
+
+
 
 clean:
 	rm $(TARGET).elf
