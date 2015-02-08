@@ -19,7 +19,7 @@ install: build
 	$(MSPDEBUG) $(MSPPROGRAMMER) "prog $(TARGET).elf"
 
 build:
-	$(CC) $(CSTANDARD) -oS -o $(TARGET).elf $(SRC)
+	$(CC) $(CSTANDARD) -oS -o $(TARGET).elf main.c
 
 debug:
 	$(CC) $(CSTANDARD) -oS -g -o $(TARGET).elf $(SRC)

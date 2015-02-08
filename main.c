@@ -1,7 +1,6 @@
 #include <stdint.h>
 #include <msp430.h>
 #include <string.h>
-#include "option.h"
 
 unsigned long unix_time;
 
