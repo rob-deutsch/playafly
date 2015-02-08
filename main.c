@@ -14,8 +14,8 @@ enum state_enum state;
 #define CLOCK_DAY WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS0
 #define CLOCK_NIGHT WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1
 
-unsigned int prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,122};
-
+//unsigned int prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,122};
+unsigned int prog[16] = {1,9,69,122,115,104,86,63,40,23,12,6,3,1,1,0};
 
 int main( void )
 {
@@ -60,13 +60,9 @@ __interrupt void wdttimer(void)
 
     if (state_should_be_in == NIGHT) {
         WDTCTL = CLOCK_NIGHT;
-        if (frac_second == 16-1) {
-            direction = -1;
-        } else if (frac_second == 0) {
-            direction = 1;
-        }
 
         frac_second += direction;
+        frac_second = frac_second % 16;
 
         CCR1 = prog[frac_second];
 

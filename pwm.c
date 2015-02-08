@@ -18,7 +18,7 @@ void main(void)
     // Enable the interrupt
     IE1=WDTIFG;
 
-    CCR0 = 18;             // PWM Period
+    CCR0 = 18-1;             // PWM Period
     CCTL1 = OUTMOD_7;          // CCR1 reset/set
     CCR1 = 0;                // CCR1 PWM duty cycle
     TACTL = TASSEL_2 + MC_1;   // SMCLK, up mode
