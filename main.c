@@ -20,6 +20,7 @@ unsigned int prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,122};
 void set_state(enum state_enum requested_state) {
     state = requested_state;
     if (requested_state == DAY) {
+        CCR1 = 0;
         WDTCTL = CLOCK_DAY;
         _BIS_SR(LPM3_bits + GIE); // Enter LPM3 w/interrupt
     } else if (requested_state == NIGHT) {
