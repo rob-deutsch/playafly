@@ -23,7 +23,7 @@ int main( void )
     unix_time = 0;
 
     // Setup the timer
-    CCR0 = 18-1;             // PWM Period
+    CCR0 = 16-1;             // PWM Period
     CCTL1 = OUTMOD_7;          // CCR1 reset/set
     CCR1 = 0;                // CCR1 PWM duty cycle
     TACTL = TASSEL_2 + MC_1;   // SMCLK, up mode
@@ -57,9 +57,9 @@ __interrupt void wdttimer(void)
 
     if (state_should_be_in == NIGHT) {
         WDTCTL = CLOCK_NIGHT;
-        if (frac_second == 17) {
+        if (frac_second == 16-1) {
             direction = -1;
-        } else if (frac_second == 1) {
+        } else if (frac_second == 0) {
             direction = 1;
         }
 
@@ -67,7 +67,7 @@ __interrupt void wdttimer(void)
 
         CCR1 = frac_second;
 
-        if (frac_second == 5) {
+        if (frac_second == 0 || frac_second == 15) {
             unix_time++;
         }
 
