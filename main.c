@@ -14,13 +14,24 @@ enum state_enum state;
 #define CLOCK_DAY WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS0
 #define CLOCK_NIGHT WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1
 
-//unsigned int prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,122};
-unsigned int prog[16] = {1,9,69,122,115,104,86,63,40,23,12,6,3,1,1,0};
+unsigned int prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,122};
+//unsigned int prog[16] = {1,9,69,122,115,104,86,63,40,23,12,6,3,1,1,0};
+
+void set_state(enum state_enum requested_state) {
+    state = requested_state;
+    if (requested_state == DAY) {
+        WDTCTL = CLOCK_DAY;
+        _BIS_SR(LPM3_bits + GIE); // Enter LPM3 w/interrupt
+    } else if (requested_state == NIGHT) {
+        WDTCTL = CLOCK_NIGHT;
+        _BIS_SR(LPM0_bits + GIE); // Enter LPM3 w/interrupt
+    }
+}
 
 int main( void )
 {
     // Stop watchdog timer to prevent time out reset
-    WDTCTL = CLOCK_NIGHT;
+    WDTCTL = WDTPW + WDTHOLD;
 
     // TODO: Set the time from Flash
     unix_time = 0;
@@ -41,9 +52,11 @@ int main( void )
 
     //state = DAY;
 
-    _BIS_SR(LPM0_bits + GIE); // Enter LPM3 w/interrupt
+    set_state(NIGHT);
     
 }
+
+
 
 #pragma vector=WDT_VECTOR
 __interrupt void wdttimer(void)
@@ -58,11 +71,17 @@ __interrupt void wdttimer(void)
         state_should_be_in = DAY;
     }
 
-    if (state_should_be_in == NIGHT) {
-        WDTCTL = CLOCK_NIGHT;
+    if (state_should_be_in != state) set_state(state_should_be_in);
+
+    if (state == NIGHT) {
+
+        if (frac_second == 16-1) {
+            direction = -1;
+        } else if (frac_second == 0) {
+            direction = 1;
+        }
 
         frac_second += direction;
-        frac_second = frac_second % 16;
 
         CCR1 = prog[frac_second];
 
@@ -70,9 +89,7 @@ __interrupt void wdttimer(void)
             unix_time++;
         }
 
-    } else {
-        WDTCTL = CLOCK_DAY;
-        CCR1 = 0;
+    } else if (state == DAY) {
         unix_time++;
     }
     IFG1&=~WDTIFG;
