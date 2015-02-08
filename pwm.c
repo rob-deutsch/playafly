@@ -18,9 +18,9 @@ void main(void)
     // Enable the interrupt
     IE1=WDTIFG;
 
-    CCR0 = 1000-1;             // PWM Period
+    CCR0 = 18;             // PWM Period
     CCTL1 = OUTMOD_7;          // CCR1 reset/set
-    CCR1 = 200;                // CCR1 PWM duty cycle
+    CCR1 = 0;                // CCR1 PWM duty cycle
     TACTL = TASSEL_2 + MC_1;   // SMCLK, up mode
 
     _BIS_SR(LPM0_bits + GIE);        // Enter LPM0
@@ -33,15 +33,15 @@ __interrupt void wdttimer(void)
     static int frac_second = 0;
     static int direction = 1;
 
-    if (frac_second == 15) {
+    if (frac_second == 17) {
         direction = -1;
-    } else if (frac_second == 0) {
+    } else if (frac_second == 1) {
         direction = 1;
     }
 
     frac_second += direction;
 
-    CCR1 = (frac_second * 999) / 16;
+    CCR1 = frac_second;
 
     IFG1&=~WDTIFG;
 }
