@@ -17,18 +17,6 @@ enum state_enum state;
 unsigned int prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,122};
 //unsigned int prog[16] = {1,9,69,122,115,104,86,63,40,23,12,6,3,1,1,0};
 
-void set_state(enum state_enum requested_state) {
-    state = requested_state;
-    if (requested_state == DAY) {
-        CCR1 = 0;
-        WDTCTL = CLOCK_DAY;
-        _BIS_SR(LPM3_bits + GIE); // Enter LPM3 w/interrupt
-    } else if (requested_state == NIGHT) {
-        WDTCTL = CLOCK_NIGHT;
-        _BIS_SR(LPM0_bits + GIE); // Enter LPM3 w/interrupt
-    }
-}
-
 int main( void )
 {
     // Stop watchdog timer to prevent time out reset
@@ -51,9 +39,10 @@ int main( void )
     BCSCTL1 &= !XTS; // LFXT1 low frequency mode
     BCSCTL3 |= LFXT1S_2; // LFXT1 = VLO
 
-    //state = DAY;
-
-    set_state(NIGHT);
+    // Set the state. Set up WTD. Enter LPM0
+    state = NIGHT;
+    WDTCTL = CLOCK_NIGHT;
+    _BIS_SR(LPM0_bits + GIE); // Enter LPM0 w/interrupt
     
 }
 
@@ -72,8 +61,18 @@ __interrupt void wdttimer(void)
         state_should_be_in = DAY;
     }
 
-    if (state_should_be_in != state) set_state(state_should_be_in);
-
+    if (state_should_be_in != state) {
+        state = state_should_be_in;
+        if (state_should_be_in == DAY) {
+            CCR1 = 0;
+            WDTCTL = CLOCK_DAY;
+            _BIS_SR_IRQ(LPM3_bits + GIE); // Enter LPM3 w/interrupt
+        } else if (state_should_be_in == NIGHT) {
+            WDTCTL = CLOCK_NIGHT;
+            _BIS_SR_IRQ(LPM0_bits + GIE); // Enter LPM0 w/interrupt
+        }
+    }
+    
     if (state == NIGHT) {
 
         if (frac_second == 16-1) {
