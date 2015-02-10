@@ -37,6 +37,7 @@ int main( void )
 
     // Set the state. Set up WTD. Enter LPM0
     state = NIGHT;
+
     WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1;
     _BIS_SR(LPM0_bits + GIE); // Enter LPM0 w/interrupt
     
@@ -71,8 +72,15 @@ __interrupt void wdttimer(void)
             _BIS_SR_IRQ(LPM0_bits + GIE); // Enter LPM0 w/interrupt
         }
     }
+
+    int pos;
+    if (unix_time % 2 == 0) {
+        pos = unix_time_frac;
+    } else {
+        pos = 15 - unix_time_frac;
+    }
     
-    if (state == NIGHT) CCR1 = prog[unix_time_frac];
+    if (state == NIGHT) CCR1 = prog[pos];
 
     IFG1&=~WDTIFG;
 }
