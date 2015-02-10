@@ -29,7 +29,7 @@ int main( void )
 
     // Enable the interrupt and set the ports
     IE1=WDTIFG;
-    P1DIR=BIT6 + BIT0;
+    P1DIR=BIT6;
     P1SEL=BIT6;
     
     BCSCTL1 &= !XTS; // LFXT1 low frequency mode
@@ -92,7 +92,7 @@ __interrupt void wdttimer(void)
 __interrupt void resetnmi(void)
 {
     unix_time_frac = 0;
-    WDTCTL = WDTPW + WDTCNTCL;
+    WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1 + WDTNMI + WDTNMIES;
     IFG1 &= ~( NMIIFG);
     IE1 |= NMIIE;
 
