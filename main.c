@@ -91,7 +91,13 @@ __interrupt void wdttimer(void)
 #pragma vector=NMI_VECTOR
 __interrupt void resetnmi(void)
 {
+
     unix_time_frac = 0;
+ 
+    int rem = (unix_time % 2) * 2; // 0 if unix_time is even, 2 if it is odd
+    unix_time = (unix_time / 2) * 2; // Round down to even number
+    unix_time += rem; // Round back up if required
+
     WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1 + WDTNMI + WDTNMIES;
     IFG1 &= ~( NMIIFG);
     IE1 |= NMIIE;
