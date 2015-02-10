@@ -4,7 +4,7 @@
 
 // TODO: Set the time in Makefile
 unsigned long unix_time = 0;
-int frac_second = 0;
+unsigned int unix_time_frac = 0;
 
 enum state_enum {
     DAY,
@@ -47,19 +47,11 @@ int main( void )
 #pragma vector=WDT_VECTOR
 __interrupt void wdttimer(void)
 {
-    static int direction = 1;
 
-    if (frac_second == 16-1) {
-        direction = -1;
-    } else if (frac_second == 0) {
-        direction = 1;
-    }
-
-    frac_second += direction;
-
-    if (frac_second == 0 || frac_second == 15) {
-        unix_time++;
-    }
+    unix_time_frac++;
+    unix_time_frac &= 0xF; // Modulo 16
+    if (!unix_time_frac) unix_time++;   // If unix_time_frac returned to 0
+                                        // then increment unix time
 
     enum state_enum state_should_be_in;
     if ((unix_time / 10) % 2 == 0) {
@@ -80,7 +72,7 @@ __interrupt void wdttimer(void)
         }
     }
     
-    if (state == NIGHT) CCR1 = prog[frac_second];
+    if (state == NIGHT) CCR1 = prog[unix_time_frac];
 
     IFG1&=~WDTIFG;
 }
