@@ -66,9 +66,11 @@ __interrupt void wdttimer(void)
         if (state_should_be_in == DAY) {
             CCR1 = 0;
             WDTCTL = CLOCK_DAY;
+            _BIC_SR_IRQ(0xFFFF);
             _BIS_SR_IRQ(LPM3_bits + GIE); // Enter LPM3 w/interrupt
         } else if (state_should_be_in == NIGHT) {
             WDTCTL = CLOCK_NIGHT;
+            _BIC_SR_IRQ(0xFFFF);
             _BIS_SR_IRQ(LPM0_bits + GIE); // Enter LPM0 w/interrupt
         }
     }
