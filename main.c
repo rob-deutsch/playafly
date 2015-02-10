@@ -29,7 +29,7 @@ int main( void )
 
     // Enable the interrupt and set the ports
     IE1=WDTIFG;
-    P1DIR=BIT6;
+    P1DIR=BIT6 + BIT0;
     P1SEL=BIT6;
     
     BCSCTL1 &= !XTS; // LFXT1 low frequency mode
@@ -38,7 +38,9 @@ int main( void )
     // Set the state. Set up WTD. Enter LPM0
     state = NIGHT;
 
-    WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1;
+    WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1 + WDTNMI + WDTNMIES;
+    IFG1 &= ~(WDTIFG | NMIIFG);
+    IE1 |= WDTIE | NMIIE;
     _BIS_SR(LPM0_bits + GIE); // Enter LPM0 w/interrupt
     
 }
@@ -48,6 +50,7 @@ int main( void )
 #pragma vector=WDT_VECTOR
 __interrupt void wdttimer(void)
 {
+    //P1OUT ^= BIT0;
 
     unix_time_frac++;
     unix_time_frac &= 0xF; // Modulo 16
@@ -83,4 +86,14 @@ __interrupt void wdttimer(void)
     if (state == NIGHT) CCR1 = prog[pos];
 
     IFG1&=~WDTIFG;
+}
+
+#pragma vector=NMI_VECTOR
+__interrupt void resetnmi(void)
+{
+    unix_time_frac = 0;
+    WDTCTL = WDTPW + WDTCNTCL;
+    IFG1 &= ~( NMIIFG);
+    IE1 |= NMIIE;
+
 }
