@@ -12,6 +12,8 @@ CC = msp430-gcc
 #     gnu99 = c99 plus GCC extensions
 CSTANDARD = -std=gnu99 -mmcu=msp430g2553
 
+TIME = `date +'%s'`
+
 all: build
 	
 install: build
@@ -19,7 +21,7 @@ install: build
 	$(MSPDEBUG) $(MSPPROGRAMMER) "prog $(TARGET).elf"
 
 build:
-	$(CC) $(CSTANDARD) -oS -o $(TARGET).elf main.c
+	$(CC) $(CSTANDARD) -oS -D UNIX_TIME=$(TIME) -o $(TARGET).elf main.c
 
 debug:
 	$(CC) $(CSTANDARD) -oS -g -o $(TARGET).elf $(SRC)

@@ -3,8 +3,12 @@
 #include <string.h>
 
 // TODO: Set the time in Makefile
-unsigned long unix_time = 0;
-unsigned int unix_time_frac = 0;
+#ifndef UNIX_TIME
+#define UNIX_TIME 0
+#endif
+
+volatile unsigned long unix_time = UNIX_TIME;
+volatile unsigned int unix_time_frac = 0;
 
 enum state_enum {
     DAY,
