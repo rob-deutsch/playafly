@@ -1,6 +1,6 @@
 TARGET = main
 
-SRC = $(wildcard *.c)
+SRC = main.c
 
 MSPDEBUG = mspdebug
 MSPPROGRAMMER = rf2500
@@ -12,6 +12,7 @@ CC = msp430-gcc
 #     gnu99 = c99 plus GCC extensions
 CSTANDARD = -std=gnu99 -mmcu=msp430g2553
 
+#TIME = `date +'%s' | tr -d "\n"`
 TIME = `date +'%s'`
 
 all: build
@@ -21,20 +22,18 @@ install: build
 	$(MSPDEBUG) $(MSPPROGRAMMER) "prog $(TARGET).elf"
 
 build:
-	$(CC) $(CSTANDARD) -oS -D UNIX_TIME=$(TIME) -o $(TARGET).elf main.c
+	$(CC) $(CSTANDARD) -oS -D UNIX_TIME=$(TIME) -o $(TARGET).elf $(SRC)
 
 debug:
-	$(CC) $(CSTANDARD) -oS -g -o $(TARGET).elf $(SRC)
+	$(CC) $(CSTANDARD) -oS -D UNIX_TIME=$(TIME) -g -o $(TARGET).elf $(SRC)
+	echo $(TIME)
 
 mspdebug:
 	$(MSPDEBUG) $(MSPPROGRAMMER)
 
-pwm:
-	$(CC) $(CSTANDARD) -oS -o pwm.elf pwm.c
+gdbdebug: debug
 	$(MSPDEBUG) $(MSPPROGRAMMER) "erase"
-	$(MSPDEBUG) $(MSPPROGRAMMER) "prog pwm.elf"
-
-
+	$(MSPDEBUG) $(MSPPROGRAMMER) "prog $(TARGET).elf" gdb
 
 clean:
 	rm $(TARGET).elf

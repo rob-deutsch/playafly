@@ -7,7 +7,7 @@
 #define UNIX_TIME 0
 #endif
 
-volatile unsigned long unix_time = UNIX_TIME;
+volatile long unix_time = UNIX_TIME;
 volatile unsigned int unix_time_frac = 0;
 
 enum state_enum {
