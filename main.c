@@ -8,7 +8,7 @@
 #endif
 
 volatile long unix_time = UNIX_TIME;
-volatile unsigned int unix_time_frac = 0;
+volatile int unix_time_frac = 0;
 
 enum state_enum {
     DAY,
