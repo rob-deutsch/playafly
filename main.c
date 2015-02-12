@@ -97,7 +97,7 @@ __interrupt void resetnmi(void)
 
     unix_time_frac = 0;
  
-    unix_time = (unix_time & 0xFC) + (unix_time & 0x1); // Round down to even number
+    unix_time = (unix_time & 0xFC) + (unix_time & 0x2); // Round to closest even number
     settimer();
 
 }
