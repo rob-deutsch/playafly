@@ -79,7 +79,7 @@ __interrupt void wdttimer(void)
 
     if (state == NIGHT) {
         int pos;
-        if (unix_time % 2) {
+        if (unix_time & 0x1) {
             pos = 15 - unix_time_frac;
         } else {
             pos = unix_time_frac;
@@ -97,7 +97,7 @@ __interrupt void resetnmi(void)
 
     unix_time_frac = 0;
  
-    unix_time = (unix_time / 2) * 2 + (unix_time % 2) * 2; // Round down to even number
+    unix_time = (unix_time & 0xFC) + (unix_time & 0x1); // Round down to even number
     settimer();
 
 }
