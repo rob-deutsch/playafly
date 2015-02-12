@@ -15,12 +15,12 @@ enum state_enum {
     NIGHT
 };
 
-enum state_enum state;
+enum state_enum state = NIGHT;
 
-unsigned int prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,122};
+unsigned char prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,122};
 //unsigned int prog[16] = {1,9,69,122,115,104,86,63,40,23,12,6,3,1,1,0};
 
-int main( void )
+void main( void )
 {
     // Stop watchdog timer to prevent time out reset
     WDTCTL = WDTPW + WDTHOLD;
@@ -28,7 +28,7 @@ int main( void )
     // Setup the timer
     CCR0 = 128-1;             // PWM Period
     CCTL1 = OUTMOD_7;          // CCR1 reset/set
-    CCR1 = 0;                // CCR1 PWM duty cycle
+//    CCR1 = 0;                // CCR1 PWM duty cycle
     TACTL = TASSEL_2 + MC_1;   // SMCLK, up mode
 
     // Enable the interrupt and set the ports
@@ -40,11 +40,9 @@ int main( void )
     BCSCTL3 |= LFXT1S_2; // LFXT1 = VLO
 
     // Set the state. Set up WTD. Enter LPM0
-    state = NIGHT;
+    //state;
 
-    WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1 + WDTNMI + WDTNMIES;
-    IFG1 &= ~(WDTIFG | NMIIFG);
-    IE1 |= WDTIE | NMIIE;
+settimer();
     _BIS_SR(LPM0_bits + GIE); // Enter LPM0 w/interrupt
     
 }
@@ -56,8 +54,7 @@ __interrupt void wdttimer(void)
 {
     //P1OUT ^= BIT0;
 
-    unix_time_frac++;
-    unix_time_frac &= 0xF; // Modulo 16
+    unix_time_frac = (unix_time_frac + 1) & 0xF;
     if (!unix_time_frac) unix_time++;   // If unix_time_frac returned to 0
                                         // then increment unix time
 
@@ -80,16 +77,18 @@ __interrupt void wdttimer(void)
         }
     }
 
-    int pos;
-    if (unix_time % 2 == 0) {
-        pos = unix_time_frac;
-    } else {
-        pos = 15 - unix_time_frac;
+    if (state == NIGHT) {
+        int pos;
+        if (unix_time % 2) {
+            pos = 15 - unix_time_frac;
+        } else {
+            pos = unix_time_frac;
+        }
+        CCR1 = prog[pos];
     }
-    
-    if (state == NIGHT) CCR1 = prog[pos];
 
-    IFG1&=~WDTIFG;
+
+    //IFG1&=~WDTIFG;
 }
 
 #pragma vector=NMI_VECTOR
@@ -98,12 +97,13 @@ __interrupt void resetnmi(void)
 
     unix_time_frac = 0;
  
-    int rem = (unix_time % 2) * 2; // 0 if unix_time is even, 2 if it is odd
-    unix_time = (unix_time / 2) * 2; // Round down to even number
-    unix_time += rem; // Round back up if required
+    unix_time = (unix_time / 2) * 2 + (unix_time % 2) * 2; // Round down to even number
+    settimer();
 
+}
+
+void settimer(void) {
     WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1 + WDTNMI + WDTNMIES;
     IFG1 &= ~( NMIIFG);
     IE1 |= NMIIE;
-
 }
