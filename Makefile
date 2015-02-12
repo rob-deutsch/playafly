@@ -25,7 +25,7 @@ build:
 	$(CC) $(CSTANDARD) -oS -D UNIX_TIME=$(TIME) -o $(TARGET).elf $(SRC)
 
 debug:
-	$(CC) $(CSTANDARD) -oS -D UNIX_TIME=$(TIME) -g -o $(TARGET).elf $(SRC)
+	$(CC) $(CSTANDARD) -oS -D UNIX_TIME=$(TIME) -g -o $(TARGET)_debug.elf $(SRC)
 	echo $(TIME)
 
 mspdebug:
@@ -33,7 +33,7 @@ mspdebug:
 
 gdbdebug: debug
 	$(MSPDEBUG) $(MSPPROGRAMMER) "erase"
-	$(MSPDEBUG) $(MSPPROGRAMMER) "prog $(TARGET).elf" gdb
+	$(MSPDEBUG) $(MSPPROGRAMMER) "prog $(TARGET)_debug.elf" gdb
 
 clean:
-	rm $(TARGET).elf
+	rm $(TARGET).elf $(TARGET)_debug.elf
