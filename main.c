@@ -37,7 +37,8 @@ int main( void )
     P1SEL=BIT6;
     
     BCSCTL1 &= !XTS; // LFXT1 low frequency mode
-    BCSCTL3 |= LFXT1S_2; // LFXT1 = VLO
+    //BCSCTL3 |= LFXT1S_2; // LFXT1 = VLO
+    BCSCTL3 |= XCAP_3;            // xtal has 12.5 pF caps
 
     // Set the state. Set up WTD. Enter LPM0
     state = NIGHT;
@@ -57,7 +58,7 @@ __interrupt void wdttimer(void)
     //P1OUT ^= BIT0;
 
     unix_time_frac++;
-    unix_time_frac &= 0xF; // Modulo 16
+    unix_time_frac = unix_time_frac % 64; // Modulo 64
     if (!unix_time_frac) unix_time++;   // If unix_time_frac returned to 0
                                         // then increment unix time
 
@@ -82,9 +83,9 @@ __interrupt void wdttimer(void)
 
     int pos;
     if (unix_time % 2 == 0) {
-        pos = unix_time_frac;
+        pos = unix_time_frac / 4;
     } else {
-        pos = 15 - unix_time_frac;
+        pos = 15 - unix_time_frac / 4;
     }
     
     if (state == NIGHT) CCR1 = prog[pos];
@@ -102,8 +103,7 @@ __interrupt void resetnmi(void)
     unix_time = (unix_time / 2) * 2; // Round down to even number
     unix_time += rem; // Round back up if required
 
-    WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1 + WDTNMI + WDTNMIES;
-    IFG1 &= ~( NMIIFG);
+    WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1 + WDTNMI + WDTNMIES;    IFG1 &= ~( NMIIFG);
     IE1 |= NMIIE;
 
 }
