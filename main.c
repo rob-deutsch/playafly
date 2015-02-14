@@ -63,7 +63,7 @@ __interrupt void wdttimer(void)
                                         // then increment unix time
 
     enum state_enum state_should_be_in;
-    if ((unix_time / 10) % 2 == 0) {
+    if ((unix_time / 30) % 2 == 0) {
         state_should_be_in = NIGHT;
     } else {
         state_should_be_in = DAY;
@@ -82,7 +82,7 @@ __interrupt void wdttimer(void)
     }
 
     int pos;
-    if (unix_time % 2 == 0) {
+    if (unix_time_frac / 32 == 0) {
         pos = unix_time_frac / 4;
     } else {
         pos = 15 - unix_time_frac / 4;
@@ -99,9 +99,9 @@ __interrupt void resetnmi(void)
 
     unix_time_frac = 0;
  
-    int rem = (unix_time % 2) * 2; // 0 if unix_time is even, 2 if it is odd
-    unix_time = (unix_time / 2) * 2; // Round down to even number
-    unix_time += rem; // Round back up if required
+    int rem = (unix_time % 60); // 0 if unix_time is even, 2 if it is odd
+//    unix_time = (unix_time / 2) * 2; // Round down to even number
+    unix_time -= rem; // Round back up if required
 
     WDTCTL = WDTPW + WDTTMSEL + WDTCNTCL + WDTSSEL + WDTIS1 + WDTNMI + WDTNMIES;    IFG1 &= ~( NMIIFG);
     IE1 |= NMIIE;
