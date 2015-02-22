@@ -1,0 +1,53 @@
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" inkscape:version="0.48.2 r9819" sodipodi:docname="Butterfly.svg" x="0px" y="0px" width="100px" height="100px" viewBox="5.0 -10.0 100.0 135.0" enable-background="new 0 0 100 100" xml:space="preserve">
+<defs>
+	
+	<v:userDefs>
+		<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+		<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+		<v:ud v:nameU="msvThemeOrder" v:val="VT0(0):26"/>
+	</v:userDefs>
+	<v:pageProperties v:shadowOffsetX="9" v:drawingUnits="0" v:shadowOffsetY="-9" v:pageScale="1" v:drawingScale="1">
+		</v:pageProperties>
+	<v:layer v:index="0" v:name="Flowchart"/>
+	<v:custProps>
+		
+			<v:cp v:invis="false" v:prompt="" v:sortKey="" v:langID="1033" v:type="7" v:lbl="Cost" v:format="@" v:cal="0" v:ask="false" v:nameU="Cost">
+			</v:cp>
+		
+			<v:cp v:invis="false" v:prompt="" v:sortKey="" v:langID="1033" v:type="2" v:lbl="Process Number" v:format="" v:cal="0" v:ask="false" v:nameU="ProcessNumber">
+			</v:cp>
+		
+			<v:cp v:invis="false" v:prompt="" v:sortKey="" v:langID="1033" v:type="0" v:lbl="Owner" v:format="" v:cal="0" v:ask="false" v:nameU="Owner">
+			</v:cp>
+		
+			<v:cp v:invis="false" v:prompt="" v:sortKey="" v:langID="1033" v:type="0" v:lbl="Function" v:format="" v:cal="0" v:ask="false" v:nameU="Function" v:val="VT4()">
+			</v:cp>
+		
+			<v:cp v:invis="false" v:prompt="" v:sortKey="" v:langID="1033" v:type="5" v:lbl="Start Date" v:format="" v:cal="0" v:ask="false" v:nameU="StartDate">
+			</v:cp>
+		
+			<v:cp v:invis="false" v:prompt="" v:sortKey="" v:langID="1033" v:type="5" v:lbl="End Date" v:format="" v:cal="0" v:ask="false" v:nameU="EndDate">
+			</v:cp>
+		
+			<v:cp v:invis="false" v:prompt="" v:sortKey="" v:langID="1033" v:type="4" v:lbl="Status" v:format=";Not Started;In Progress;Completed;Deferred;Waiting on Input" v:cal="0" v:ask="false" v:nameU="Status" v:val="VT4()">
+			</v:cp>
+	</v:custProps>
+	<v:userDefs>
+		<v:ud v:nameU="AntiScale" v:val="VT0(1):26"/>
+		<v:ud v:prompt="" v:nameU="visVersion" v:val="VT0(14):26"/>
+		<v:ud v:prompt="" v:nameU="DefaultWidth" v:val="VT0(1):0"/>
+		<v:ud v:prompt="" v:nameU="DefaultHeight" v:val="VT0(0.75):0"/>
+		<v:ud v:prompt="" v:nameU="ResizeTxtHeight" v:val="VT0(0.75):0"/>
+		<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+		<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+	</v:userDefs>
+</defs>
+<sodipodi:namedview bordercolor="#666666" objecttolerance="10" pagecolor="#ffffff" guidetolerance="10" id="namedview21" borderopacity="1" inkscape:cy="50" gridtolerance="10" inkscape:zoom="2.91" showgrid="false" inkscape:cx="50" inkscape:window-y="0" inkscape:window-maximized="0" inkscape:pageopacity="0" inkscape:window-x="0" inkscape:window-height="888" inkscape:current-layer="Layer_1" inkscape:window-width="1070" inkscape:pageshadow="2">
+	</sodipodi:namedview>
+<v:documentProperties v:viewMarkup="false" v:langID="1033">
+	<v:userDefs>
+		<v:ud v:nameU="msvNoAutoConnect" v:val="VT0(0):26"/>
+	</v:userDefs>
+</v:documentProperties>
+<path id="path6" d="M91.499,39.29c0-11.46-14.675-16.735-24.207-10.376c-4.811,3.205-10.954,5.443-14.732,8.049  c1.633-8.273,6.783-19.099,11.275-19.099c1.908,0,3.457-0.874,3.457-2.786c0-1.908-1.549-2.782-3.457-2.782  c-6.948,0-11.247,8.095-13.835,14.957c-2.588-6.862-6.887-14.957-13.835-14.957c-1.908,0-3.454,0.874-3.454,2.782  c0,1.912,1.546,2.786,3.454,2.786c4.492,0,9.639,10.825,11.273,19.099c-3.775-2.613-9.919-4.844-14.727-8.049  C23.178,22.555,8.5,27.83,8.5,39.29c0,8.604,7.192,21.836,15.627,27.894c-1.105,1.989-1.792,4.247-1.792,6.688  c0,7.641,6.191,13.833,13.829,13.833C43.806,87.704,50,81.512,50,73.871c0,7.641,6.194,13.833,13.835,13.833  c7.637,0,13.831-6.192,13.831-13.833c0-2.44-0.686-4.698-1.795-6.688C84.307,61.126,91.499,47.894,91.499,39.29z"/>
+<text x="0.0" y="117.5" font-size="5.0" font-weight="bold" font-family="Helvetica Neue, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000000">Created by Vasil Enchev</text><text x="0.0" y="122.5" font-size="5.0" font-weight="bold" font-family="Helvetica Neue, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000000">from the Noun Project</text></svg>
