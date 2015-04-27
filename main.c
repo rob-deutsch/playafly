@@ -17,7 +17,7 @@ enum state_enum {
 
 enum state_enum state;
 
-unsigned int prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,122};
+unsigned int prog[16] = {1,1,2,3,5,9,14,23,36,52,69,86,100,110,117,127};
 //unsigned int prog[16] = {1,9,69,122,115,104,86,63,40,23,12,6,3,1,1,0};
 
 int main( void )
