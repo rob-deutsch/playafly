@@ -92,9 +92,9 @@
 <board>
 <plain>
 <wire x1="6.35" y1="9.2075" x2="26.67" y2="9.2075" width="0.254" layer="20"/>
-<wire x1="26.67" y1="9.2075" x2="26.67" y2="25.7175" width="0.254" layer="20"/>
-<wire x1="26.67" y1="25.7175" x2="6.35" y2="25.7175" width="0.254" layer="20"/>
-<wire x1="6.35" y1="9.2075" x2="6.35" y2="25.7175" width="0.254" layer="20"/>
+<wire x1="26.67" y1="9.2075" x2="26.67" y2="25.4" width="0.254" layer="20"/>
+<wire x1="26.67" y1="25.4" x2="6.35" y2="25.4" width="0.254" layer="20"/>
+<wire x1="6.35" y1="9.2075" x2="6.35" y2="25.4" width="0.254" layer="20"/>
 <dimension x1="6.35" y1="8.89" x2="26.67" y2="8.89" x3="16.51" y3="5.08" textsize="1.778" layer="1"/>
 <dimension x1="26.67" y1="8.89" x2="26.67" y2="25.4" x3="34.925" y3="17.145" textsize="1.778" layer="1"/>
 </plain>
@@ -1532,11 +1532,11 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="NAME" x="2.175" y="10.575" size="1.27" layer="25"/>
 <attribute name="VALUE" x="6.858" y="9.779" size="0.0254" layer="27"/>
 </element>
-<element name="LED+" library="testpad" package="TP15R" value="TPTP15R" x="24.765" y="17.145">
-<attribute name="TP_SIGNAL_NAME" value="" x="24.765" y="17.145" size="1.778" layer="27" display="off"/>
+<element name="LED+" library="testpad" package="TP15R" value="TPTP15R" x="25.4" y="17.145">
+<attribute name="TP_SIGNAL_NAME" value="" x="25.4" y="17.145" size="1.778" layer="27" display="off"/>
 </element>
-<element name="LED-" library="testpad" package="TP15R" value="TPTP15R" x="24.765" y="19.05">
-<attribute name="TP_SIGNAL_NAME" value="" x="24.765" y="19.05" size="1.778" layer="27" display="off"/>
+<element name="LED-" library="testpad" package="TP15R" value="TPTP15R" x="25.4" y="19.05">
+<attribute name="TP_SIGNAL_NAME" value="" x="25.4" y="19.05" size="1.778" layer="27" display="off"/>
 </element>
 <element name="VCC2" library="testpad" package="TP15R" value="TPTP15R" x="25.4" y="14.605">
 <attribute name="TP_SIGNAL_NAME" value="" x="25.4" y="14.605" size="1.778" layer="27" display="off"/>
@@ -1606,30 +1606,25 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="24.003" y1="13.3985" x2="24.003" y2="13.5255" width="0.254" layer="1"/>
 <wire x1="24.003" y1="13.5255" x2="24.765" y2="14.2875" width="0.254" layer="1"/>
 <wire x1="24.765" y1="14.2875" x2="25.4" y2="14.605" width="0.254" layer="1"/>
-<wire x1="24.765" y1="15.875" x2="24.765" y2="17.145" width="0" layer="19" extent="1-1"/>
 <wire x1="22.86" y1="12.38" x2="23.561" y2="13.081" width="0.254" layer="1"/>
+<wire x1="24.765" y1="15.875" x2="24.765" y2="16.51" width="0.254" layer="1"/>
+<wire x1="24.765" y1="16.51" x2="25.4" y2="17.145" width="0.254" layer="1"/>
 </signal>
 <signal name="TXD">
 <contactref element="U$1" pad="15"/>
 <contactref element="TXD" pad="TP"/>
-<wire x1="7.62" y1="20.955" x2="9.271" y2="19.304" width="0.254" layer="1"/>
-<wire x1="9.271" y1="19.304" x2="11.43" y2="19.304" width="0.254" layer="1"/>
-<via x="11.43" y="19.304" extent="1-16" drill="0.6" shape="square"/>
-<wire x1="11.43" y1="19.304" x2="15.875" y2="19.304" width="0.254" layer="16"/>
-<via x="15.875" y="19.304" extent="1-16" drill="0.6" shape="square"/>
-<wire x1="15.875" y1="19.304" x2="15.875" y2="21.995" width="0.254" layer="1"/>
+<wire x1="7.62" y1="20.955" x2="8.255" y2="20.955" width="0.254" layer="1"/>
+<wire x1="8.255" y1="20.955" x2="8.89" y2="20.32" width="0.254" layer="1"/>
+<wire x1="8.89" y1="20.32" x2="15.24" y2="20.32" width="0.254" layer="1"/>
+<wire x1="15.24" y1="20.32" x2="15.875" y2="20.955" width="0.254" layer="1"/>
+<wire x1="15.875" y1="20.955" x2="15.875" y2="21.995" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="RXD">
 <contactref element="U$1" pad="14"/>
 <contactref element="RXD" pad="TP"/>
-<wire x1="7.62" y1="23.495" x2="8.89" y2="22.225" width="0.254" layer="1"/>
-<wire x1="8.89" y1="22.225" x2="8.89" y2="20.955" width="0.254" layer="1"/>
-<wire x1="8.89" y1="20.955" x2="9.525" y2="20.32" width="0.254" layer="1"/>
-<wire x1="9.525" y1="20.32" x2="13.335" y2="20.32" width="0.254" layer="1"/>
-<wire x1="13.335" y1="20.32" x2="13.97" y2="19.685" width="0.254" layer="1"/>
-<wire x1="13.97" y1="19.685" x2="13.97" y2="18.415" width="0.254" layer="1"/>
-<wire x1="13.97" y1="18.415" x2="17.145" y2="18.415" width="0.254" layer="1"/>
-<wire x1="17.145" y1="18.415" x2="17.145" y2="21.995" width="0.254" layer="1"/>
+<wire x1="7.62" y1="23.495" x2="16.51" y2="23.495" width="0.254" layer="1"/>
+<wire x1="16.51" y1="23.495" x2="17.145" y2="22.86" width="0.254" layer="1"/>
+<wire x1="17.145" y1="22.86" x2="17.145" y2="21.995" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="LED">
 <contactref element="U$1" pad="13"/>
@@ -1677,7 +1672,7 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="LED-" pad="TP"/>
 <wire x1="22.8625" y1="21.76" x2="23.1345" y2="21.76" width="0.254" layer="1"/>
 <wire x1="23.1345" y1="21.76" x2="24.765" y2="20.1295" width="0.254" layer="1"/>
-<wire x1="24.765" y1="20.1295" x2="24.765" y2="19.05" width="0.254" layer="1"/>
+<wire x1="24.765" y1="20.1295" x2="25.4" y2="19.05" width="0.254" layer="1"/>
 </signal>
 </signals>
 <errors>
