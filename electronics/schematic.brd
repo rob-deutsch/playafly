@@ -92,9 +92,9 @@
 <board>
 <plain>
 <wire x1="6.35" y1="9.2075" x2="26.67" y2="9.2075" width="0.254" layer="20"/>
-<wire x1="26.67" y1="9.2075" x2="26.67" y2="25.4" width="0.254" layer="20"/>
-<wire x1="26.67" y1="25.4" x2="6.35" y2="25.4" width="0.254" layer="20"/>
-<wire x1="6.35" y1="9.2075" x2="6.35" y2="25.4" width="0.254" layer="20"/>
+<wire x1="26.67" y1="9.2075" x2="26.67" y2="25.0825" width="0.254" layer="20"/>
+<wire x1="26.67" y1="25.0825" x2="6.35" y2="25.0825" width="0.254" layer="20"/>
+<wire x1="6.35" y1="9.2075" x2="6.35" y2="25.0825" width="0.254" layer="20"/>
 <dimension x1="6.35" y1="8.89" x2="26.67" y2="8.89" x3="16.51" y3="5.08" textsize="1.778" layer="1"/>
 <dimension x1="26.67" y1="8.89" x2="26.67" y2="25.4" x3="34.925" y3="17.145" textsize="1.778" layer="1"/>
 </plain>
@@ -1501,7 +1501,7 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="OC_FARNELL" value="unknown" x="22.86" y="17.78" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="U$1" library="TI_MSP430_v16" package="DW20" value="F21X1---DW20" x="15.24" y="17.145"/>
-<element name="Q3" library="transistor-fet" package="SOT23" value="SST201" x="23.8125" y="22.86"/>
+<element name="Q3" library="transistor-fet" package="SOT23" value="SST201" x="23.8125" y="22.86" rot="R90"/>
 <element name="RXD" library="testpad" package="TP15R" value="TPTP15R" x="7.62" y="23.495" smashed="yes">
 <attribute name="TP_SIGNAL_NAME" value="" x="7.62" y="20.955" size="1" layer="37"/>
 <attribute name="NAME" x="2.175" y="23.275" size="1.27" layer="25"/>
@@ -1629,9 +1629,11 @@ Please make sure your boards conform to these design rules.</description>
 <signal name="LED">
 <contactref element="U$1" pad="13"/>
 <contactref element="Q3" pad="3"/>
-<wire x1="18.415" y1="21.995" x2="18.415" y2="23.495" width="0.254" layer="1"/>
-<wire x1="18.415" y1="23.495" x2="18.88" y2="23.96" width="0.254" layer="1"/>
-<wire x1="18.88" y1="23.96" x2="23.8125" y2="23.96" width="0.254" layer="1"/>
+<wire x1="22.7125" y1="22.86" x2="22.7125" y2="23.6425" width="0.254" layer="1"/>
+<wire x1="22.7125" y1="23.6425" x2="22.225" y2="24.13" width="0.254" layer="1"/>
+<wire x1="22.225" y1="24.13" x2="19.685" y2="24.13" width="0.254" layer="1"/>
+<wire x1="19.685" y1="24.13" x2="18.415" y2="22.86" width="0.254" layer="1"/>
+<wire x1="18.415" y1="22.86" x2="18.415" y2="21.995" width="0.254" layer="1"/>
 </signal>
 <signal name="GND">
 <contactref element="U$1" pad="4"/>
@@ -1656,23 +1658,20 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="18.7325" y1="15.8115" x2="17.2085" y2="15.8115" width="0.254" layer="1"/>
 <contactref element="C1" pad="2"/>
 <wire x1="24.765" y1="12.385" x2="25.4" y2="12.7" width="0.254" layer="1"/>
-<wire x1="24.7625" y1="21.76" x2="24.765" y2="21.7625" width="0.254" layer="1"/>
-<wire x1="24.765" y1="21.7625" x2="24.765" y2="22.86" width="0.254" layer="1"/>
-<wire x1="24.765" y1="22.86" x2="21.971" y2="22.86" width="0.254" layer="1"/>
-<wire x1="21.971" y1="22.86" x2="21.844" y2="22.733" width="0.254" layer="1"/>
-<wire x1="21.844" y1="22.733" x2="21.844" y2="21.0185" width="0.254" layer="1"/>
-<wire x1="21.844" y1="21.0185" x2="20.6375" y2="19.812" width="0.254" layer="1"/>
-<wire x1="20.6375" y1="19.812" x2="20.6375" y2="19.2405" width="0.254" layer="1"/>
 <wire x1="22.86" y1="10.48" x2="23.815" y2="10.48" width="0.254" layer="1"/>
 <wire x1="23.815" y1="10.48" x2="25.4" y2="10.4775" width="0.254" layer="1"/>
 <wire x1="13.335" y1="11.43" x2="13.335" y2="12.295" width="0" layer="19" extent="1-1"/>
+<wire x1="20.6375" y1="19.2405" x2="20.6375" y2="20.0025" width="0.254" layer="1"/>
+<wire x1="20.6375" y1="20.0025" x2="22.225" y2="21.59" width="0.254" layer="1"/>
+<wire x1="22.225" y1="21.59" x2="23.749" y2="21.59" width="0.254" layer="1"/>
+<wire x1="23.749" y1="21.59" x2="23.749" y2="23.2815" width="0.254" layer="1"/>
+<wire x1="23.749" y1="23.2815" x2="24.9125" y2="23.81" width="0.254" layer="1"/>
 </signal>
 <signal name="N$4">
 <contactref element="Q3" pad="1"/>
 <contactref element="LED-" pad="TP"/>
-<wire x1="22.8625" y1="21.76" x2="23.1345" y2="21.76" width="0.254" layer="1"/>
-<wire x1="23.1345" y1="21.76" x2="24.765" y2="20.1295" width="0.254" layer="1"/>
-<wire x1="24.765" y1="20.1295" x2="25.4" y2="19.05" width="0.254" layer="1"/>
+<wire x1="24.9125" y1="21.91" x2="24.9125" y2="19.5375" width="0.254" layer="1"/>
+<wire x1="24.9125" y1="19.5375" x2="25.4" y2="19.05" width="0.254" layer="1"/>
 </signal>
 </signals>
 <errors>
