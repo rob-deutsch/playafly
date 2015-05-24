@@ -4746,8 +4746,6 @@ Source: AVX .. aphvc.pdf</description>
 <errors>
 <approved hash="104,1,12.7,78.74,U$1,2,VCC,,,"/>
 <approved hash="104,1,12.7,73.66,U$1,4,GND,,,"/>
-<approved hash="113,1,13.9277,37.0247,SV1,,,,,"/>
-<approved hash="113,1,76.5217,36.83,LED1,,,,,"/>
 </errors>
 </schematic>
 </drawing>
