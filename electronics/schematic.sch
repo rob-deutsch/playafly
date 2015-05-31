@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="dots" multiple="1" display="yes" altdistance="0.05" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -8384,6 +8384,7 @@ Source: U6 OnSemi Inductive Load Driver MDC3105-D.PDF</description>
 <part name="SYNC1" library="testpad" deviceset="TP" device="TP15R" value="TPTP15R"/>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="P+3" library="supply1" deviceset="VCC" device=""/>
+<part name="R5" library="resistor" deviceset="R-EU_" device="M0805"/>
 </parts>
 <sheets>
 <sheet>
@@ -8459,7 +8460,8 @@ ICSP Connection</text>
 <attribute name="TP_SIGNAL_NAME" x="100.33" y="16.51" size="1.778" layer="97"/>
 </instance>
 <instance part="GND4" gate="1" x="99.06" y="10.16"/>
-<instance part="P+3" gate="VCC" x="50.8" y="68.58"/>
+<instance part="P+3" gate="VCC" x="43.18" y="68.58"/>
+<instance part="R5" gate="G$1" x="48.26" y="63.5" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -8471,8 +8473,8 @@ ICSP Connection</text>
 <label x="55.88" y="68.58" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$2" gate="G$1" pin="2"/>
-<wire x1="66.04" y1="25.4" x2="72.898" y2="25.4" width="0.1524" layer="91"/>
+<pinref part="U$2" gate="G$1" pin="1"/>
+<wire x1="66.04" y1="10.16" x2="72.898" y2="25.4" width="0.1524" layer="91"/>
 <label x="66.04" y="25.4" size="1.778" layer="95"/>
 </segment>
 </net>
@@ -8483,8 +8485,8 @@ ICSP Connection</text>
 <label x="55.88" y="66.04" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="66.04" y1="10.16" x2="73.406" y2="10.16" width="0.1524" layer="91"/>
-<pinref part="U$2" gate="G$1" pin="1"/>
+<wire x1="66.04" y1="25.4" x2="73.406" y2="10.16" width="0.1524" layer="91"/>
+<pinref part="U$2" gate="G$1" pin="2"/>
 <label x="66.04" y="10.16" size="1.778" layer="95"/>
 </segment>
 </net>
@@ -8505,6 +8507,12 @@ ICSP Connection</text>
 <wire x1="16.51" y1="8.89" x2="26.67" y2="8.89" width="0.1524" layer="91"/>
 <label x="19.05" y="8.89" size="1.778" layer="95"/>
 <pinref part="RST" gate="G$1" pin="TP"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="7"/>
+<wire x1="63.5" y1="63.5" x2="53.34" y2="63.5" width="0.1524" layer="91"/>
+<pinref part="R5" gate="G$1" pin="1"/>
+<label x="55.88" y="63.5" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -8548,10 +8556,9 @@ ICSP Connection</text>
 <label x="13.97" y="48.26" size="1.778" layer="95"/>
 </segment>
 <segment>
+<pinref part="R5" gate="G$1" pin="2"/>
 <pinref part="P+3" gate="VCC" pin="VCC"/>
-<wire x1="50.8" y1="66.04" x2="50.8" y2="63.5" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="7"/>
-<wire x1="63.5" y1="63.5" x2="50.8" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="63.5" x2="43.18" y2="66.04" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="TXD" class="0">
@@ -8580,14 +8587,13 @@ ICSP Connection</text>
 </net>
 <net name="LED" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="13"/>
-<wire x1="106.68" y1="60.96" x2="115.57" y2="60.96" width="0.1524" layer="91"/>
-<label x="109.22" y="60.96" size="1.778" layer="95"/>
-</segment>
-<segment>
 <wire x1="149.86" y1="27.94" x2="139.7" y2="27.94" width="0.1524" layer="91"/>
 <label x="142.24" y="27.94" size="1.778" layer="95"/>
 <pinref part="Q2" gate="A" pin="G"/>
+</segment>
+<segment>
+<wire x1="106.68" y1="76.2" x2="115.57" y2="76.2" width="0.1524" layer="91"/>
+<label x="109.22" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GND" class="0">
