@@ -29,7 +29,7 @@ int main( void )
     CCR0 = 128-1;             // PWM Period
     CCTL1 = OUTMOD_7;          // CCR1 reset/set
     CCR1 = 0;                // CCR1 PWM duty cycle
-    TACTL = TASSEL_2 + MC_1;   // SMCLK, up mode
+    TACTL = TASSEL_2 + MC_1 + ID_0 + ID_1;   // SMCLK, up mode
 
     // Enable the interrupt and set the ports
     IE1=WDTIFG;
@@ -88,7 +88,10 @@ __interrupt void wdttimer(void)
         pos = 15 - unix_time_frac / 4;
     }
     
-    if (state == NIGHT) CCR1 = prog[pos];
+    if (state == NIGHT) {
+        TAR=0;
+        CCR1 = prog[pos];
+    }
 
     IFG1&=~WDTIFG;
 }
